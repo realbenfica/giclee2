@@ -17,29 +17,32 @@
         endif
       -%}
 
-      {%- if settings.variant_type == 'button' and product.title == "Sample Packs" -%}
-        {%- render 'variant-button',
-          section_id: section_id,
+      {%- if settings.variant_type == 'button' and product.title == "Sample Packs" or "Giclée Printing" -%}
+        {%- render 'variant-button'
+          , section_id: section_id,
           option: option,
           forloop: forloop,
           is_color: is_color,
-          color_option_index: color_option_index
-        -%}
+          color_option_index: color_option_index -%}
       {%- else -%}
-        <!-- {%- render 'variant-dropdown',
-          section_id: section_id,
+        {%- render 'variant-dropdown'
+          , section_id: section_id,
           option: option,
-          forloop: forloop
-        -%} -->
+          forloop: forloop -%}
       {%- endif -%}
     {%- endfor -%}
   {%- endunless -%}
 
-  <select name="id" id="ProductSelect-{{ section_id }}" class="product-single__variants no-js">
+  <select
+    name="id"
+    id="ProductSelect-{{ section_id }}"
+    class="product-single__variants no-js">
     {%- for variant in product.variants -%}
       {%- if variant.available -%}
-        <option {% if variant == product.selected_or_first_available_variant %}
-          selected="selected"{% endif %}
+        <option
+          {% if variant == product.selected_or_first_available_variant %}
+          selected="selected"
+          {% endif %}
           value="{{ variant.id }}">
           {{ variant.title }} - {{ variant.price | money_with_currency }}
         </option>
@@ -77,10 +80,7 @@
   -%}
 
   {%- if settings.inventory_enable -%}
-    <div
-      id="ProductInventory-{{ section_id }}"
-      class="product__inventory{% unless inventory_visible %} hide{% endunless %}"
-      >
+    <div id="ProductInventory-{{ section_id }}" class="product__inventory{% unless inventory_visible %} hide{% endunless %}">
       {%- if current_variant.available -%}
         {{ 'products.product.stock_label' | t: count: current_variant.inventory_quantity }}
       {%- endif -%}
@@ -88,9 +88,7 @@
   {%- endif -%}
 
   {%- if settings.inventory_transfers_enable -%}
-    <div
-      id="ProductIncomingInventory-{{ section_id }}"
-      class="product__inventory{% if inventory_visible %} hide{% endif %}">
+    <div id="ProductIncomingInventory-{{ section_id }}" class="product__inventory{% if inventory_visible %} hide{% endif %}">
       {%- if show_incoming == true -%}
         {%- if current_variant.next_incoming_date -%}
           {%- assign date = current_variant.next_incoming_date | date: format: 'date' -%}
@@ -113,9 +111,9 @@
     endif
   -%}
 
-  {%- if enable_dynamic_buttons -%}
+    {%- if enable_dynamic_buttons -%}
     <div class="payment-buttons">
-  {%- endif -%}
+    {%- endif -%}
 
     {%- liquid
       assign default_text = 'products.product.add_to_cart' | t
@@ -130,8 +128,8 @@
     -%}
 
     <!-- <a target="_blank" href="https://www.wetransfer.com" style="margin-bottom: 20px; color: white;" class="btn btn--full">
-      <img style="height: 20px; vertical-align: bottom;" src="https://cdn.shopify.com/s/files/1/0505/3290/9256/files/WeTrasnsfer_logo.svg?v=1641911774" alt="">  
-      &nbsp Send with WeTransfer
+    <img style="height: 20px; vertical-align: bottom;" src="https://cdn.shopify.com/s/files/1/0505/3290/9256/files/WeTrasnsfer_logo.svg?v=1641911774" alt="">  
+    &nbsp Send with WeTransfer
     </a> -->
 
     <button
@@ -139,7 +137,9 @@
       name="add"
       id="AddToCart-{{ section_id }}"
       class="btn btn--full add-to-cart{% if enable_dynamic_buttons and product.selling_plan_groups == empty %} btn--secondary{% endif %}"
-      {% unless current_variant.available %} disabled="disabled"{% endunless %}>
+      {% unless current_variant.available %}
+      disabled="disabled"
+      {% endunless %}>
       <span id="AddToCartText-{{ section_id }}" data-default-text="{{ default_text }}">
         {{ button_text }}
       </span>
@@ -149,15 +149,23 @@
       {{ form | payment_button }}
     {%- endif -%}
 
-  {%- if enable_dynamic_buttons -%}
+    {%- if enable_dynamic_buttons -%}
     </div>
   {%- endif -%}
 
-  <textarea id="VariantsJson-{{ section_id }}" class="hide" aria-hidden="true" aria-label="Product JSON">
+  <textarea
+    id="VariantsJson-{{ section_id }}"
+    class="hide"
+    aria-hidden="true"
+    aria-label="Product JSON">
     {{ product.variants | json }}
   </textarea>
   {%- if product.options.size > 1 -%}
-    <textarea id="CurrentVariantJson-{{ section_id }}" class="hide" aria-hidden="true" aria-label="Variant JSON">
+    <textarea
+      id="CurrentVariantJson-{{ section_id }}"
+      class="hide"
+      aria-hidden="true"
+      aria-label="Variant JSON">
       {{ current_variant | json }}
     </textarea>
   {%- endif -%}
