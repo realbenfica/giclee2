@@ -1,0 +1,11 @@
+<script>
+    var falc = falc || {};
+    falc.template = {{ template.name | json }};
+    falc.customer_id = {{ customer.id | json }};
+    falc.product_id = {{ product.id | json }};
+    falc.product_name = {{ product.title | json }};
+    falc.collection_id = {{ collection.id | json }};
+    falc.collection_name = {{ collection.title | json }};
+    falc.search_keyword = {{ search.terms | json }};
+    falc.shopify_domain = {{ shop.permanent_domain | json }};
+</script>
