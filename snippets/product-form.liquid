@@ -17,7 +17,7 @@
         endif
       -%}
 
-      {%- if settings.variant_type == 'button' and product.title == "Sample Packs" or "Giclée Printing" -%}
+      {%- if settings.variant_type == 'button' -%}
         {%- render 'variant-button'
           , section_id: section_id,
           option: option,
@@ -111,7 +111,7 @@
     endif
   -%}
 
-    {%- if enable_dynamic_buttons -%}
+  {%- if enable_dynamic_buttons -%}
     <div class="payment-buttons">
     {%- endif -%}
 
@@ -127,10 +127,19 @@
       endunless
     -%}
 
-    <!-- <a target="_blank" href="https://www.wetransfer.com" style="margin-bottom: 20px; color: white;" class="btn btn--full">
-    <img style="height: 20px; vertical-align: bottom;" src="https://cdn.shopify.com/s/files/1/0505/3290/9256/files/WeTrasnsfer_logo.svg?v=1641911774" alt="">  
-    &nbsp Send with WeTransfer
-    </a> -->
+    {%- if product.title != "Sample Packs" -%}
+      <a
+        target="_blank"
+        href="https://www.wetransfer.com"
+        style="margin-bottom: 20px; color: black; background-color: white; width: 100%; border: solid 1px black;"
+        class="btn btn-full">
+        <img
+          style="height: 20px; vertical-align: bottom;"
+          src="https://cdn.shopify.com/s/files/1/0505/3290/9256/files/20210713100304_WeTransfer_logo.svg?v=1671986853"
+          alt="">
+        &nbsp Upload Files to WeTransfer
+      </a>
+    {%- endif -%}
 
     <button
       {% if product.empty? %}type="button"{% else %}type="submit"{% endif %}
